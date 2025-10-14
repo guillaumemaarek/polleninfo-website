@@ -1266,8 +1266,10 @@
             const mobileMenu = document.getElementById('mobileMenu');
             const toggle = document.querySelector('.mobile-menu-toggle');
             
-            mobileMenu.classList.toggle('active');
-            toggle.classList.toggle('active');
+            if (mobileMenu && toggle) {
+                mobileMenu.classList.toggle('active');
+                toggle.classList.toggle('active');
+            }
         }
 
         // Close mobile menu when clicking outside
@@ -1275,7 +1277,7 @@
             const mobileMenu = document.getElementById('mobileMenu');
             const toggle = document.querySelector('.mobile-menu-toggle');
             
-            if (!mobileMenu.contains(event.target) && !toggle.contains(event.target)) {
+            if (mobileMenu && toggle && !mobileMenu.contains(event.target) && !toggle.contains(event.target)) {
                 mobileMenu.classList.remove('active');
                 toggle.classList.remove('active');
             }
@@ -1300,12 +1302,15 @@
             });
 
             // Calculate transform to center the active slide properly
-            const containerWidth = 1000; // Container max-width
-            const containerPadding = 160; // 80px padding on each side
+            const container = document.querySelector('.carousel-container');
+            const containerRect = container.getBoundingClientRect();
+            const containerWidth = containerRect.width;
+            const containerPadding = window.innerWidth <= 768 ? 120 : 160; // Mobile vs desktop padding
             const availableWidth = containerWidth - containerPadding;
-            const slideWidth = 180; // Base slide width
+            
+            const slideWidth = window.innerWidth <= 768 ? 120 : 180; // Mobile vs desktop slide width
             const gap = 20;
-            const activeSlideWidth = 240;
+            const activeSlideWidth = window.innerWidth <= 768 ? 160 : 240; // Mobile vs desktop active width
             
             // Calculate the center position
             const centerPosition = availableWidth / 2;
@@ -1359,6 +1364,11 @@
             setInterval(() => {
                 changeSlide(1);
             }, 4000);
+        });
+
+        // Recalculate carousel positioning on window resize
+        window.addEventListener('resize', function() {
+            updateCarousel();
         });
 
         // Navbar scroll effect

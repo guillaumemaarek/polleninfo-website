@@ -1075,8 +1075,10 @@
             const mobileMenu = document.getElementById('mobileMenu');
             const toggle = document.querySelector('.mobile-menu-toggle');
             
-            mobileMenu.classList.toggle('active');
-            toggle.classList.toggle('active');
+            if (mobileMenu && toggle) {
+                mobileMenu.classList.toggle('active');
+                toggle.classList.toggle('active');
+            }
         }
 
         // Close mobile menu when clicking outside
@@ -1084,7 +1086,7 @@
             const mobileMenu = document.getElementById('mobileMenu');
             const toggle = document.querySelector('.mobile-menu-toggle');
             
-            if (!mobileMenu.contains(event.target) && !toggle.contains(event.target)) {
+            if (mobileMenu && toggle && !mobileMenu.contains(event.target) && !toggle.contains(event.target)) {
                 mobileMenu.classList.remove('active');
                 toggle.classList.remove('active');
             }
