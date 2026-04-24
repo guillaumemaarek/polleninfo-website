@@ -429,6 +429,7 @@ nav .container {
 }
 
 .feature-card {
+    --snippet-scale: 1;
     background: linear-gradient(135deg, var(--white) 0%, var(--gray-100) 100%);
     padding: 40px 32px;
     border-radius: 24px;
@@ -497,6 +498,8 @@ nav .container {
     max-width: 100%;
     height: 170px;
     object-fit: contain;
+    transform: scale(var(--snippet-scale));
+    transform-origin: center;
     border-radius: 0;
     box-shadow: none;
     border: none;
@@ -508,8 +511,13 @@ nav .container {
 }
 
 .feature-card:hover .feature-snippet {
-    transform: scale(1.06);
+    transform: scale(calc(var(--snippet-scale) * 1.06));
     box-shadow: none;
+}
+
+/* First-row snippets include more transparent padding in source assets. */
+.features-grid .feature-card:nth-child(-n+3) {
+    --snippet-scale: 1.22;
 }
 
 .feature-card h3 {
